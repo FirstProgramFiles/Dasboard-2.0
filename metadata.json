@@ -1,0 +1,5 @@
+{
+  "name": "HeatSupply Director Dashboard",
+  "description": "A real-time operational dashboard for a heating supply company director, visualizing technical, financial, and sales metrics with AI-powered analysis.",
+  "requestFramePermissions": []
+}
