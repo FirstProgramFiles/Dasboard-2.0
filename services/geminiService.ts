@@ -1,12 +1,25 @@
 import { GoogleGenAI } from "@google/genai";
 import { DashboardState } from "../types";
 
-const apiKey = process.env.API_KEY || '';
+// Safely access the API key. 
+// In Vite/Browser environments, accessing 'process' directly can throw a ReferenceError if not polyfilled.
+const getApiKey = () => {
+  try {
+    if (typeof process !== 'undefined' && process.env) {
+      return process.env.API_KEY || '';
+    }
+  } catch (e) {
+    console.warn("Could not access process.env");
+  }
+  return '';
+};
+
+const apiKey = getApiKey();
 const ai = new GoogleGenAI({ apiKey: apiKey });
 
 export const analyzeDashboard = async (data: DashboardState): Promise<string> => {
   if (!apiKey) {
-    return "Демо режим: API Key не настроен. Введите ключ для получения AI-аналитики.";
+    return "Демо режим: API Key не найден. AI-аналитика недоступна.";
   }
 
   try {

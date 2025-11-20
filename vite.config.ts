@@ -7,4 +7,8 @@ export default defineConfig({
     host: true,
     allowedHosts: ['dashboard-am7d.onrender.com']
   },
+  define: {
+    // Polyfill process.env to prevent "Uncaught ReferenceError: process is not defined"
+    'process.env': {}
+  }
 });
