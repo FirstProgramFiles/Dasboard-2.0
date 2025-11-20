@@ -30,6 +30,8 @@ const FinanceTab: React.FC = () => {
                             outerRadius={80}
                             paddingAngle={5}
                             dataKey="value"
+                            label={false}
+                            labelLine={false}
                         >
                             {pieData.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
@@ -39,7 +41,11 @@ const FinanceTab: React.FC = () => {
                             contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', color: '#ffffff' }}
                             itemStyle={{ color: '#ffffff' }}
                         />
-                        <Legend verticalAlign="bottom" height={36} />
+                        <Legend 
+                            verticalAlign="bottom" 
+                            height={36} 
+                            formatter={(value) => <span className="text-slate-300">{value}</span>}
+                        />
                     </PieChart>
                 </ResponsiveContainer>
              </div>
@@ -58,7 +64,7 @@ const FinanceTab: React.FC = () => {
                             itemStyle={{ color: '#ffffff' }}
                             cursor={{fill: '#334155', opacity: 0.4}}
                         />
-                        <Legend />
+                        <Legend formatter={(value) => <span className="text-slate-300">{value}</span>} />
                         <Bar dataKey="plan" name="План (млн ₽)" fill="#475569" radius={[4, 4, 0, 0]} />
                         <Bar dataKey="fact" name="Факт (млн ₽)" fill="#6366f1" radius={[4, 4, 0, 0]} />
                     </BarChart>

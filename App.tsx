@@ -74,8 +74,8 @@ const App: React.FC = () => {
                 </nav>
             </div>
 
-            {/* Scrollable Content Area */}
-            <div className="flex-1 overflow-y-auto p-4 lg:p-6 scroll-smooth flex flex-col">
+            {/* Content Area */}
+            <div className="flex-1 overflow-y-auto lg:overflow-hidden p-4 lg:p-6 scroll-smooth flex flex-col">
                 {renderTabContent()}
             </div>
         </main>
