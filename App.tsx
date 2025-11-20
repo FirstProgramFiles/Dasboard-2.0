@@ -6,15 +6,12 @@ import TechnicalTab from './components/TechnicalTab';
 import FinanceTab from './components/FinanceTab';
 import { TabType, DashboardState } from './types';
 import { getInitialDashboardState } from './services/mockData';
-import { analyzeDashboard } from './services/geminiService';
 import { LayoutDashboard, Activity, PieChart, Users, Wrench } from 'lucide-react';
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>(TabType.OVERVIEW);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [data, setData] = useState<DashboardState>(getInitialDashboardState());
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [aiAnalysis, setAiAnalysis] = useState<string | null>(null);
 
   // Simulate live data updates
   useEffect(() => {
@@ -27,14 +24,6 @@ const App: React.FC = () => {
     }, 5000);
     return () => clearInterval(interval);
   }, []);
-
-  const handleAnalyze = async () => {
-    setIsAnalyzing(true);
-    setAiAnalysis(null);
-    const result = await analyzeDashboard(data);
-    setAiAnalysis(result);
-    setIsAnalyzing(false);
-  };
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -61,8 +50,6 @@ const App: React.FC = () => {
     <div className="min-h-screen flex flex-col bg-slate-950 text-slate-50 overflow-hidden">
       <Header 
         onOpenSidebar={() => setSidebarOpen(true)} 
-        onAnalyze={handleAnalyze}
-        isAnalyzing={isAnalyzing}
       />
 
       <div className="flex flex-1 overflow-hidden relative">
@@ -89,23 +76,6 @@ const App: React.FC = () => {
 
             {/* Scrollable Content Area */}
             <div className="flex-1 overflow-y-auto p-6 scroll-smooth">
-                {aiAnalysis && (
-                  <div className="mb-6 bg-indigo-950/40 border border-indigo-500/50 rounded-lg p-4 animate-fade-in relative">
-                      <button 
-                        onClick={() => setAiAnalysis(null)} 
-                        className="absolute top-2 right-2 text-indigo-300 hover:text-white text-xs"
-                      >
-                        Закрыть
-                      </button>
-                      <h3 className="text-indigo-300 font-bold text-sm mb-2 flex items-center gap-2">
-                          <div className="w-2 h-2 bg-indigo-400 rounded-full animate-pulse"></div>
-                          AI АНАЛИЗ СИТУАЦИИ
-                      </h3>
-                      <p className="text-slate-200 text-sm leading-relaxed whitespace-pre-wrap font-mono">
-                        {aiAnalysis}
-                      </p>
-                  </div>
-                )}
                 {renderTabContent()}
                 
                 {/* Footer spacer */}

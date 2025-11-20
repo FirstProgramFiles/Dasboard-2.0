@@ -1,27 +1,11 @@
 import { GoogleGenAI } from "@google/genai";
 import { DashboardState } from "../types";
 
-// Safely access the API key. 
-// In Vite/Browser environments, accessing 'process' directly can throw a ReferenceError if not polyfilled.
-const getApiKey = () => {
-  try {
-    if (typeof process !== 'undefined' && process.env) {
-      return process.env.API_KEY || '';
-    }
-  } catch (e) {
-    console.warn("Could not access process.env");
-  }
-  return '';
-};
-
-const apiKey = getApiKey();
-const ai = new GoogleGenAI({ apiKey: apiKey });
+// Initialize the Gemini API client with the API key from the environment.
+// The API key must be obtained exclusively from process.env.API_KEY.
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export const analyzeDashboard = async (data: DashboardState): Promise<string> => {
-  if (!apiKey) {
-    return "Демо режим: API Key не найден. AI-аналитика недоступна.";
-  }
-
   try {
     const prompt = `
       Действуй как главный инженер и финансовый директор теплоснабжающей компании.

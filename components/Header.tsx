@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Bell, Menu, BrainCircuit, Power, Activity } from 'lucide-react';
+import { Search, Bell, Menu, Power, Activity } from 'lucide-react';
 
 interface HeaderProps {
   onOpenSidebar: () => void;
-  onAnalyze: () => void;
-  isAnalyzing: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ onOpenSidebar, onAnalyze, isAnalyzing }) => {
+const Header: React.FC<HeaderProps> = ({ onOpenSidebar }) => {
   const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
@@ -47,15 +45,6 @@ const Header: React.FC<HeaderProps> = ({ onOpenSidebar, onAnalyze, isAnalyzing }
       </div>
 
       <div className="flex items-center gap-4">
-        <button
-          onClick={onAnalyze}
-          disabled={isAnalyzing}
-          className="hidden sm:flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-indigo-900/20"
-        >
-          <BrainCircuit className={`w-4 h-4 ${isAnalyzing ? 'animate-spin' : ''}`} />
-          {isAnalyzing ? 'Анализ...' : 'AI Анализ'}
-        </button>
-
         <div className="relative hidden sm:block">
           <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
           <input
