@@ -75,11 +75,8 @@ const App: React.FC = () => {
             </div>
 
             {/* Scrollable Content Area */}
-            <div className="flex-1 overflow-y-auto p-6 scroll-smooth">
+            <div className="flex-1 overflow-y-auto p-4 lg:p-6 scroll-smooth flex flex-col">
                 {renderTabContent()}
-                
-                {/* Footer spacer */}
-                <div className="h-12"></div>
             </div>
         </main>
 

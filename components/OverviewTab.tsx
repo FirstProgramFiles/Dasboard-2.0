@@ -13,25 +13,24 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ data }) => {
   const chartData = generateHistoricalData();
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      {/* Technical Metrics */}
-      <div>
-        <h2 className="text-slate-100 text-lg font-semibold mb-4 flex items-center gap-2">
-          <span className="w-1 h-6 bg-blue-500 rounded-full"></span>
-          Теплоснабжение & Технические данные
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+    <div className="h-full flex flex-col gap-4 animate-fade-in">
+      {/* Top Row: All Metrics Compacted */}
+      <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-7 gap-4 flex-none">
           <StatCard metric={data.heatOutput} icon={<Flame className="w-5 h-5" />} />
           <StatCard metric={data.outTemp} icon={<Thermometer className="w-5 h-5" />} />
           <StatCard metric={data.pressure} icon={<Gauge className="w-5 h-5" />} />
-        </div>
+          <StatCard metric={data.incomeDay} icon={<DollarSign className="w-5 h-5" />} />
+          <StatCard metric={data.budgetExecution} icon={<Wallet className="w-5 h-5" />} />
+          <StatCard metric={data.paymentRate} icon={<CreditCard className="w-5 h-5" />} />
+          <StatCard metric={data.activeContracts} icon={<Users className="w-5 h-5" />} />
       </div>
 
-      {/* Main Chart Area */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-slate-800 border border-slate-700 rounded-lg p-4 shadow-sm">
-           <h3 className="text-slate-300 font-medium mb-4 text-sm">Динамика тепловой нагрузки (24ч)</h3>
-           <div className="h-64 w-full">
+      {/* Main Content Area: Fills remaining height */}
+      <div className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-3 gap-4">
+        {/* Chart */}
+        <div className="lg:col-span-2 bg-slate-800 border border-slate-700 rounded-lg p-4 shadow-sm flex flex-col">
+           <h3 className="text-slate-300 font-medium mb-4 text-sm flex-none">Динамика тепловой нагрузки (24ч)</h3>
+           <div className="flex-1 min-h-0 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={chartData}>
                 <defs>
@@ -55,15 +54,15 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ data }) => {
 
         {/* Incident Summary */}
         <div className="bg-slate-800 border border-slate-700 rounded-lg p-4 shadow-sm flex flex-col">
-            <div className="flex justify-between items-center mb-4">
+            <div className="flex justify-between items-center mb-4 flex-none">
                <h3 className="text-slate-300 font-medium text-sm">Аварийная ситуация</h3>
                <span className={`px-2 py-1 rounded text-xs font-bold ${data.activeAccidents > 0 ? 'bg-rose-500/20 text-rose-400' : 'bg-emerald-500/20 text-emerald-400'}`}>
                   {data.activeAccidents > 0 ? `${data.activeAccidents} АКТИВНЫХ` : 'НОРМА'}
                </span>
             </div>
             
-            <div className="flex-1 space-y-4">
-               <div className="flex items-center justify-between p-3 bg-slate-900 rounded border border-slate-700">
+            <div className="flex-1 flex flex-col gap-4 overflow-y-auto">
+               <div className="flex items-center justify-between p-3 bg-slate-900 rounded border border-slate-700 flex-none">
                   <div className="flex items-center gap-3">
                      <div className="p-2 bg-rose-500/10 rounded-full text-rose-500">
                         <AlertOctagon className="w-6 h-6" />
@@ -75,9 +74,9 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ data }) => {
                   </div>
                </div>
 
-               <div className="space-y-2">
+               <div className="space-y-2 flex-1">
                   <p className="text-xs text-slate-500 uppercase font-bold">Последние инциденты</p>
-                  {data.incidents.slice(0, 2).map(inc => (
+                  {data.incidents.map(inc => (
                       <div key={inc.id} className="flex items-center gap-3 p-2 hover:bg-slate-700/50 rounded transition-colors">
                           <div className={`w-2 h-2 rounded-full ${inc.status === IncidentStatus.NEW ? 'bg-rose-500 animate-pulse' : 'bg-amber-500'}`}></div>
                           <div className="flex-1 min-w-0">
@@ -89,20 +88,6 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ data }) => {
                   ))}
                </div>
             </div>
-        </div>
-      </div>
-
-      {/* Finance & Sales */}
-      <div>
-        <h2 className="text-slate-100 text-lg font-semibold mb-4 flex items-center gap-2">
-          <span className="w-1 h-6 bg-emerald-500 rounded-full"></span>
-          Финансы и Сбыт
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
-          <StatCard metric={data.incomeDay} icon={<DollarSign className="w-5 h-5" />} />
-          <StatCard metric={data.budgetExecution} icon={<Wallet className="w-5 h-5" />} />
-          <StatCard metric={data.paymentRate} icon={<CreditCard className="w-5 h-5" />} />
-          <StatCard metric={data.activeContracts} icon={<Users className="w-5 h-5" />} />
         </div>
       </div>
     </div>

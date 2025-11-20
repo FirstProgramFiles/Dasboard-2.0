@@ -20,11 +20,11 @@ const TechnicalTab: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-6 animate-fade-in">
-       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div className="h-full flex flex-col gap-4 animate-fade-in">
+       <div className="flex-[3] min-h-0 grid grid-cols-1 lg:grid-cols-3 gap-4">
           {/* Map Placeholder */}
-          <div className="lg:col-span-2 bg-slate-800 border border-slate-700 rounded-lg p-4 min-h-[300px] flex flex-col relative overflow-hidden group">
-             <h3 className="text-slate-300 font-medium mb-4">Интерактивная карта объектов</h3>
+          <div className="lg:col-span-2 bg-slate-800 border border-slate-700 rounded-lg p-4 flex flex-col relative overflow-hidden group">
+             <h3 className="text-slate-300 font-medium mb-4 flex-none">Интерактивная карта объектов</h3>
              <div className="flex-1 bg-slate-900 rounded border border-slate-800 flex items-center justify-center relative">
                 {/* Simulated Map Grid */}
                 <div className="absolute inset-0 opacity-20" style={{backgroundImage: 'radial-gradient(#475569 1px, transparent 1px)', backgroundSize: '20px 20px'}}></div>
@@ -45,9 +45,9 @@ const TechnicalTab: React.FC = () => {
           </div>
 
           {/* Resource Usage */}
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
-             <h3 className="text-slate-300 font-medium mb-4">Расход ресурсов (Тек. час)</h3>
-             <div className="space-y-6">
+          <div className="bg-slate-800 border border-slate-700 rounded-lg p-4 flex flex-col">
+             <h3 className="text-slate-300 font-medium mb-4 flex-none">Расход ресурсов (Тек. час)</h3>
+             <div className="space-y-6 flex-1 overflow-y-auto">
                 {resources.map((res) => (
                     <div key={res.name}>
                         <div className="flex justify-between text-sm mb-1">
@@ -66,9 +66,10 @@ const TechnicalTab: React.FC = () => {
           </div>
        </div>
 
-       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-4 h-80">
-              <h3 className="text-slate-300 font-medium mb-4">Параметры теплоносителя (Сутки)</h3>
+       <div className="flex-[2] min-h-0 grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="bg-slate-800 border border-slate-700 rounded-lg p-4 flex flex-col">
+              <h3 className="text-slate-300 font-medium mb-4 flex-none">Параметры теплоносителя (Сутки)</h3>
+              <div className="flex-1 min-h-0">
                <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={data}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
@@ -81,10 +82,12 @@ const TechnicalTab: React.FC = () => {
                     <Line yAxisId="right" type="monotone" dataKey="pressure" stroke="#3b82f6" name="Давление (кгс/см²)" strokeWidth={2} dot={false} />
                   </LineChart>
                 </ResponsiveContainer>
+              </div>
           </div>
 
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-4 h-80">
-             <h3 className="text-slate-300 font-medium mb-4">Коэффициент использования (КПД)</h3>
+          <div className="bg-slate-800 border border-slate-700 rounded-lg p-4 flex flex-col">
+             <h3 className="text-slate-300 font-medium mb-4 flex-none">Коэффициент использования (КПД)</h3>
+             <div className="flex-1 min-h-0">
              <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={efficiencyData} layout="vertical">
                     <CartesianGrid strokeDasharray="3 3" stroke="#334155" horizontal={false} />
@@ -95,6 +98,7 @@ const TechnicalTab: React.FC = () => {
                     <Bar dataKey="norm" name="Норма" fill="#334155" barSize={10} radius={[0, 4, 4, 0]} />
                 </BarChart>
              </ResponsiveContainer>
+             </div>
           </div>
        </div>
     </div>
