@@ -21,7 +21,7 @@ const App: React.FC = () => {
     const interval = setInterval(() => {
       setData((prev) => ({
         ...prev,
-        heatOutput: { ...prev.heatOutput, value: prev.heatOutput.value + (Math.random() - 0.5) },
+        heatOutput: { ...prev.heatOutput, value: Number(prev.heatOutput.value) + (Math.random() - 0.5) },
         pressure: { ...prev.pressure, value: Number((Number(prev.pressure.value) + (Math.random() * 0.2 - 0.1)).toFixed(1)) },
       }));
     }, 5000);
